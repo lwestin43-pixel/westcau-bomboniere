@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Westcau Bomboniere — Doces que inspiram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #150e0a;
+    --bg-soft: #1d140f;
+    --card: #21160f;
+    --gold: #c9a24c;
+    --gold-bright: #e4c078;
+    --gold-dim: #8a6d34;
+    --cream: #ede3cf;
+    --cocoa: #4a2f1e;
+    --cocoa-light: #6b4429;
+    --line: rgba(201,162,76,0.25);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--cream);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* subtle background texture: cacao specks */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.5;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, var(--gold-dim), transparent),
+      radial-gradient(1px 1px at 80% 60%, var(--gold-dim), transparent),
+      radial-gradient(1px 1px at 40% 80%, var(--cocoa-light), transparent),
+      radial-gradient(1px 1px at 65% 15%, var(--gold-dim), transparent),
+      radial-gradient(1px 1px at 25% 55%, var(--cocoa-light), transparent);
+    background-size: 600px 600px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(21,14,10,0.85);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1120px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Cormorant Garamond', serif; font-size:1.35rem; color:var(--gold-bright); }
+  .brand svg{ width:26px; height:26px; }
+  .nav-links{ display:flex; gap:34px; font-size:0.95rem; }
+  .nav-links a{ opacity:0.85; transition:opacity .2s, color .2s; }
+  .nav-links a:hover{ opacity:1; color:var(--gold-bright); }
+  .nav-cta{
+    border:1px solid var(--gold); padding:9px 20px; border-radius:2px; font-size:0.88rem;
+    transition: background .2s, color .2s;
+  }
+  .nav-cta:hover{ background:var(--gold); color:#1a1109; }
+  .burger{ display:none; }
+  @media (max-width:800px){
+    .nav-links{ display:none; }
+    .nav-cta{ display:none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; text-align:center;
+    padding:140px 32px 100px;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, rgba(201,162,76,0.10), transparent 60%),
+      linear-gradient(180deg, #150e0a 0%, #180f0a 60%, #170f0b 100%);
+  }
+  .hero-ring{
+    position:absolute; width:640px; height:640px; max-width:90vw; max-height:90vw;
+    border:1px solid var(--line); border-radius:50%;
+    top:50%; left:50%; transform:translate(-50%,-52%);
+  }
+  .hero-ring.r2{ width:760px; height:760px; max-width:100vw; max-height:100vw; opacity:0.6; }
+  .hero-content{ position:relative; z-index:2; max-width:680px; }
+  .eyebrow{ font-size:0.82rem; letter-spacing:0.24em; color:var(--gold); margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(2.8rem, 7vw, 5.2rem);
+    color:var(--gold-bright);
+    line-height:0.98;
+    margin-bottom:20px;
+  }
+  .hero p.tagline{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:1.35rem; color:var(--cream); opacity:0.85; margin-bottom:36px;
+  }
+  .hero-actions{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 30px; font-size:0.95rem; border-radius:2px;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s, color .25s;
+  }
+  .btn-primary{ background:var(--gold); color:#1a1109; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(201,162,76,0.28); }
+  .btn-outline{ border:1px solid var(--gold-dim); color:var(--cream); }
+  .btn-outline:hover{ border-color:var(--gold); color:var(--gold-bright); }
+
+  /* cacao pod mark used across the page */
+  .pod{ display:inline-block; }
+
+  /* ---------- SECTION HEADINGS ---------- */
+  .section{ padding:110px 0; position:relative; z-index:2; }
+  .section-head{ max-width:560px; margin-bottom:56px; }
+  .section-head .eyebrow{ margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(2rem, 4vw, 2.8rem); color:var(--gold-bright); }
+  .section-head p{ margin-top:16px; opacity:0.75; font-size:1.02rem; max-width:480px; }
+  .divider{
+    width:64px; height:1px; background:var(--gold-dim); margin:18px 0;
+  }
+
+  /* ---------- PRODUCTS ---------- */
+  .products-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:2px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:860px){ .products-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .products-grid{ grid-template-columns:1fr; } }
+  .product{
+    background:var(--bg-soft); padding:42px 30px; position:relative;
+    transition:background .3s;
+  }
+  .product:hover{ background:var(--card); }
+  .product-mark{
+    width:52px; height:52px; margin-bottom:26px;
+    border:1px solid var(--gold-dim); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .product-mark svg{ width:24px; height:24px; }
+  .product h3{ font-size:1.5rem; color:var(--gold-bright); margin-bottom:10px; }
+  .product p{ font-size:0.92rem; opacity:0.7; margin-bottom:18px; }
+  .product .price{ font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:var(--gold); }
+  .product .order{
+    display:inline-block; margin-top:16px; font-size:0.85rem; color:var(--cream);
+    border-bottom:1px solid var(--gold-dim); padding-bottom:2px; opacity:0.85;
+    transition:opacity .2s, border-color .2s;
+  }
+  .product .order:hover{ opacity:1; border-color:var(--gold); }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{ background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .t-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:44px; }
+  @media (max-width:860px){ .t-grid{ grid-template-columns:1fr; gap:36px; } }
+  .t-card{ }
+  .t-quote{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.2rem; color:var(--cream); opacity:0.92; line-height:1.55; }
+  .t-name{ margin-top:20px; font-size:0.88rem; letter-spacing:0.04em; color:var(--gold); }
+  .t-stars{ margin-bottom:16px; color:var(--gold); letter-spacing:2px; font-size:0.9rem; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:70px; align-items:start; }
+  @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; gap:48px; } }
+  .info-row{ display:flex; gap:16px; padding:20px 0; border-bottom:1px solid var(--line); }
+  .info-row:first-child{ border-top:1px solid var(--line); }
+  .info-row .label{ width:120px; flex-shrink:0; font-size:0.82rem; letter-spacing:0.12em; color:var(--gold); text-transform:uppercase; padding-top:2px; }
+  .info-row .value{ font-size:1rem; opacity:0.88; }
+  .map-frame{ border:1px solid var(--line); overflow:hidden; height:100%; min-height:320px; }
+  .map-frame iframe{ width:100%; height:100%; min-height:320px; border:0; filter:grayscale(0.3) sepia(0.15) contrast(1.05); }
+  .whats-card{
+    margin-top:40px; padding:28px 30px; border:1px solid var(--gold-dim);
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .whats-card .wtext h3{ color:var(--gold-bright); font-size:1.3rem; margin-bottom:4px; }
+  .whats-card .wtext p{ font-size:0.9rem; opacity:0.7; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:50px 0 36px; border-top:1px solid var(--line); text-align:center; }
+  footer .brand{ justify-content:center; margin-bottom:14px; }
+  footer p{ font-size:0.82rem; opacity:0.55; }
+
+  ::selection{ background:var(--gold); color:#1a1109; }
+  a:focus-visible, button:focus-visible{ outline:1px solid var(--gold-bright); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6C22 6 24 8 24 12C24 18 20 24 20 24C20 24 16 18 16 12C16 8 18 6 20 6Z" stroke="#c9a24c" stroke-width="1.3"/>
+        <path d="M20 8V22" stroke="#c9a24c" stroke-width="1"/>
+      </svg>
+      Westcau
+    </div>
+    <div class="nav-links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a class="nav-cta" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">Pedir agora</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-ring"></div>
+  <div class="hero-ring r2"></div>
+  <div class="hero-content">
+    <div class="eyebrow">BOMBONIERE ARTESANAL</div>
+    <h1>Westcau<br>Bomboniere</h1>
+    <p class="tagline">Doces que inspiram</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">
+        Fazer pedido pelo WhatsApp
+      </a>
+      <a class="btn btn-outline" href="#catalogo">Ver catálogo</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="catalogo">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">CATÁLOGO</div>
+      <h2>Nossos doces</h2>
+      <p>Chocolates finos, trufas e bombons feitos à mão, em pequenos lotes — selecione, chame no WhatsApp e combine sua entrega.</p>
+    </div>
+  </div>
+  <div class="products-grid wrap" style="max-width:1120px;">
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3C13.5 3 15 4.5 15 8C15 12.5 12 17 12 17C12 17 9 12.5 9 8C9 4.5 10.5 3 12 3Z" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Trufas Sortidas</h3>
+      <p>Caixa com 12 unidades — chocolate meio amargo, ao leite e branco, recheios de avelã, café e frutas vermelhas.</p>
+      <div class="price">a partir de R$ 48</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20pedir%20as%20Trufas%20Sortidas." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Barra Nobre 70%</h3>
+      <p>Chocolate belga 70% cacau, cristalização lenta e acabamento fosco. Disponível puro ou com castanhas.</p>
+      <div class="price">a partir de R$ 32</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20pedir%20a%20Barra%20Nobre%2070%25." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="6" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Bombons Recheados</h3>
+      <p>Casquinha crocante e recheios cremosos — pistache, doce de leite, maracujá e ganache de café.</p>
+      <div class="price">a partir de R$ 54</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20pedir%20os%20Bombons%20Recheados." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 12C6 8 9 5 12 5C15 5 18 8 18 12C18 16 15 19 12 19C9 19 6 16 6 12Z" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Ovos e Sazonais</h3>
+      <p>Edições de temporada — Páscoa, Natal e datas especiais, com embalagens exclusivas Westcau.</p>
+      <div class="price">consulte disponibilidade</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20saber%20sobre%20os%20Ovos%20e%20Sazonais." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M12 4V20" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Cestas Presenteáveis</h3>
+      <p>Montagens personalizadas para aniversários, casamentos e presentes corporativos.</p>
+      <div class="price">a partir de R$ 120</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20montar%20uma%20Cesta%20Presente%C3%A1vel." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+    <div class="product">
+      <div class="product-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4L20 20H4L12 4Z" stroke="#c9a24c" stroke-width="1.2"/></svg></div>
+      <h3>Kits para Festas</h3>
+      <p>Bem-casados e mini bombons para casamentos, chás de bebê e eventos corporativos, sob encomenda.</p>
+      <div class="price">consulte quantidade</div>
+      <a class="order" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Quero%20fazer%20um%20or%C3%A7amento%20para%20um%20Kit%20de%20Festa." target="_blank" rel="noopener">Pedir pelo WhatsApp →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials" id="depoimentos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">DEPOIMENTOS</div>
+      <h2>Quem já provou</h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">As trufas são de outro nível — chocolate de verdade, sem aquele doce enjoativo. Já virou presente oficial da família.</p>
+        <div class="t-name">Marina Ferreira</div>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">Pedi uma cesta em cima da hora e chegou linda, bem embalada e no prazo combinado. Atendimento super atencioso.</p>
+        <div class="t-name">Rafael Souza</div>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">A barra 70% com castanhas é viciante. Comprei pra experimentar e já virei cliente fixa.</p>
+        <div class="t-name">Juliana Prado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contato">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">CONTATO</div>
+      <h2>Fale com a gente</h2>
+      <p>Pedidos, encomendas personalizadas e parcerias — responda direto pelo WhatsApp ou visite nosso ponto de retirada.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="info-row">
+          <div class="label">WhatsApp</div>
+          <div class="value">(11) 98080-3995</div>
+        </div>
+        <div class="info-row">
+          <div class="label">E-mail</div>
+          <div class="value">contato@westcau.com.br</div>
+        </div>
+        <div class="info-row">
+          <div class="label">Endereço</div>
+          <div class="value">Rua das Cerejeiras, 123 — Centro, Sua Cidade/UF</div>
+        </div>
+        <div class="info-row">
+          <div class="label">Horário</div>
+          <div class="value">Terça a sábado, 10h às 19h</div>
+        </div>
+
+        <div class="whats-card">
+          <div class="wtext">
+            <h3>Pedidos e orçamentos</h3>
+            <p>Fale agora e monte sua caixa personalizada.</p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/5511980803995?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps?q=Rua+das+Cerejeiras+123&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6C22 6 24 8 24 12C24 18 20 24 20 24C20 24 16 18 16 12C16 8 18 6 20 6Z" stroke="#c9a24c" stroke-width="1.3"/>
+        <path d="M20 8V22" stroke="#c9a24c" stroke-width="1"/>
+      </svg>
+      Westcau
+    </div>
+    <p>© 2026 Westcau Bomboniere — Doces que inspiram. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
